@@ -1,0 +1,9 @@
+SELECT 
+		CONCAT(
+					DATE_FORMAT(CURRENT_DATE(),"%Y%m"),
+					LPAD((COUNT(POID)+1),5,'0')
+		) AS PONumb FROM `po`
+WHERE YEAR(PODate) = DATE_FORMAT(CURRENT_DATE(),"%Y")
+			AND
+			MONTH(PODate) = DATE_FORMAT(CURRENT_DATE(),"%m");
+			

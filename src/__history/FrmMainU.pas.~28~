@@ -1,0 +1,80 @@
+unit FrmMainU;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
+  FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids,
+  Vcl.Mask, Vcl.Buttons, Vcl.ComCtrls;
+
+type
+  TFrmMain = class(TForm)
+    LBPrincipal: TLabel;
+    DBConnection: TFDConnection;
+    TBLPrincipal: TFDTable;
+    DSRPrincipal: TDataSource;
+    TBLDistributionBranch: TFDTable;
+    DSRDistributionBranch: TDataSource;
+    DBGrid1: TDBGrid;
+    LBLPrincipalName: TDBText;
+    ChxPrincipalShow: TCheckBox;
+    EDTPrincipalID: TDBEdit;
+    TBLPO: TFDTable;
+    DSRPO: TDataSource;
+    CBXPrincipalName: TComboBox;
+    BitBtn1: TBitBtn;
+    LBLNOPO: TLabel;
+    DBEdit1: TDBEdit;
+    LBLCabang: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    DateTimePicker1: TDateTimePicker;
+    LBLTangalPO: TLabel;
+    DBEdit2: TDBEdit;
+    procedure ChxPrincipalShowClick(Sender: TObject);
+    procedure EDTPrincipalIDChange(Sender: TObject);
+  private
+    { Private declarations }
+    procedure fillPrincipal;
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmMain: TFrmMain;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrmMain.fillPrincipal;
+begin
+  CBXPrincipalName.Clear;
+  with TBLPrincipal do
+  begin
+    while not Eof do
+    begin
+      CBXPrincipalName.Items.Add(FieldByName('PrincipalName').AsString);
+    end;
+  end;
+end;
+
+procedure TFrmMain.ChxPrincipalShowClick(Sender: TObject);
+begin
+  LBLPrincipalName.Visible := ChxPrincipalShow.Checked;
+end;
+
+procedure TFrmMain.EDTPrincipalIDChange(Sender: TObject);
+begin
+  with TBLDistributionBranch do
+  begin
+    if not filtered then Filtered := True;
+    Filter := 'FPDID = '+EDTPrincipalID.Text;
+  end;
+end;
+
+end.

@@ -1,0 +1,182 @@
+object FrmMain: TFrmMain
+  Left = 0
+  Top = 0
+  Caption = 'Purcase Order Entry'
+  ClientHeight = 500
+  ClientWidth = 720
+  Color = clBtnFace
+  Font.Charset = ANSI_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -16
+  Font.Name = 'Verdana'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 18
+  object LBPrincipal: TLabel
+    Left = 24
+    Top = 86
+    Width = 69
+    Height = 18
+    Caption = 'Principal'
+  end
+  object LBLPrincipalName: TDBText
+    Left = 106
+    Top = 115
+    Width = 249
+    Height = 14
+    DataField = 'PrincipalHoldings'
+    DataSource = DSRPrincipal
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+    Visible = False
+  end
+  object LBLNOPO: TLabel
+    Left = 24
+    Top = 54
+    Width = 60
+    Height = 18
+    Caption = 'NO. PO'
+  end
+  object DBGrid1: TDBGrid
+    Left = 24
+    Top = 328
+    Width = 673
+    Height = 120
+    DataSource = DSRDistributionBranch
+    TabOrder = 0
+    TitleFont.Charset = ANSI_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -16
+    TitleFont.Name = 'Verdana'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'DisBID'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'FBDName'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'FPDName'
+        Visible = True
+      end>
+  end
+  object ChxPrincipalShow: TCheckBox
+    Left = 368
+    Top = 87
+    Width = 97
+    Height = 17
+    Caption = 'Tampilkan PT'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    OnClick = ChxPrincipalShowClick
+  end
+  object EDTPrincipalID: TDBEdit
+    Left = 368
+    Top = 115
+    Width = 97
+    Height = 20
+    DataField = 'PrincipalID'
+    DataSource = DSRPrincipal
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    Visible = False
+    OnChange = EDTPrincipalIDChange
+  end
+  object CBXPrincipalName: TComboBox
+    Left = 106
+    Top = 83
+    Width = 249
+    Height = 26
+    TabOrder = 3
+    Text = 'ComboBox1'
+  end
+  object BitBtn1: TBitBtn
+    Left = 24
+    Top = 4
+    Width = 128
+    Height = 36
+    Caption = 'B&ARU (F1)'
+    TabOrder = 4
+  end
+  object DBEdit1: TDBEdit
+    Left = 106
+    Top = 51
+    Width = 249
+    Height = 26
+    TabOrder = 5
+  end
+  object DBConnection: TFDConnection
+    Params.Strings = (
+      'Database=TAPPS'
+      'DriverID=MySQL'
+      'User_Name=bowo'
+      'Password=asdf'
+      'Server=PC110')
+    Connected = True
+    LoginPrompt = False
+    Left = 664
+    Top = 136
+  end
+  object TBLPrincipal: TFDTable
+    Active = True
+    IndexFieldNames = 'PrincipalID'
+    Connection = DBConnection
+    UpdateOptions.UpdateTableName = 'Principal'
+    TableName = 'Principal'
+    Left = 560
+    Top = 56
+  end
+  object DSRPrincipal: TDataSource
+    DataSet = TBLPrincipal
+    Left = 560
+    Top = 8
+  end
+  object TBLDistributionBranch: TFDTable
+    Active = True
+    IndexFieldNames = 'DisBID'
+    Connection = DBConnection
+    UpdateOptions.UpdateTableName = 'TAPPS.distributionbranch'
+    TableName = 'TAPPS.distributionbranch'
+    Left = 648
+    Top = 64
+  end
+  object DSRDistributionBranch: TDataSource
+    DataSet = TBLDistributionBranch
+    Left = 648
+    Top = 8
+  end
+  object TBLPO: TFDTable
+    IndexFieldNames = 'POID'
+    Connection = DBConnection
+    UpdateOptions.UpdateTableName = 'PO'
+    TableName = 'PO'
+    Left = 584
+    Top = 112
+  end
+  object DSRPO: TDataSource
+    DataSet = TBLPO
+    Left = 616
+    Top = 168
+  end
+end
